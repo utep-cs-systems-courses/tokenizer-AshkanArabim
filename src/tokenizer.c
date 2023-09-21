@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <tokenizer.h>
+#include "tokenizer.h"
 
 int space_char(char c) {
   return c == '\t' || c == ' ';

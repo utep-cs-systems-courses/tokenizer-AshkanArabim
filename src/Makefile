@@ -1,8 +1,9 @@
 OBJS= history.o tokenizer.o
 
-all:interface # doesn't need a body
+all:interface 
 
-interface:
+# PREV MISTAKE: you forgot to include $(OBJS) as interface's dependency...
+interface: $(OBJS)
 	cc -o interface interface.c $(OBJS)
 
 $(OBJS): tokenizer.h history.h
