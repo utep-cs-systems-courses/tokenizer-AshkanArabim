@@ -1,5 +1,7 @@
 #include "stdio.h"
 
+// typedef avoid you having to call 'struct' every time you want
+// to use BstNode
 typedef struct BstNode_s {
   struct BstNode_s *children[2];
   char *str;
