@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include "tokenizer.h"
+#include "history.h"
 
 int main() {
   printf("Welcome to Ashkan's tokenizer!\nEnter your sentence and press enter.\n");
@@ -10,7 +12,7 @@ int main() {
     /* while(c = getchar()){ */
     /*   printf("%c", c); */
     /* } */
-
+    
     char line[100];
     fgets(line, sizeof(line), stdin);
     printf(line);

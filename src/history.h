@@ -21,7 +21,7 @@ List* init_history();
 void add_history(List *list, char *str);
 
 /* Retrieve the string stored in the node where Item->id == id.
-   List* list - the linked list
+j   List* list - the linked list
    int id - the id of the Item to find */
 char *get_history(List *list, int id);
 
