@@ -3,8 +3,8 @@ OBJS= history.o tokenizer.o
 all:interface 
 
 # PREV MISTAKE: you forgot to include $(OBJS) as interface's dependency...
-interface: $(OBJS)
-	cc -o interface interface.c $(OBJS)
+interface: $(OBJS) interface.c
+	cc -g -o interface interface.c $(OBJS)
 
 $(OBJS): tokenizer.h history.h
 

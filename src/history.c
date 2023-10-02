@@ -56,15 +56,20 @@ void add_history(List *list, char *str) {
   list->root->next = NULL; // assign next to NULL (bc it's the last one)
 }
 
-char *get_history(List *list, int id) {
+char *get_history(List* list, int id) {
+  printf("%p", list); // DEBUG
   Item *item = list->root;
+  printf("inside get_hist..."); // DEBUG
   char *word = item->str; // these default to the first
+  printf("inside get_hist..."); // DEBUG
   // so, in the for loop below we use i<id to avoid duplicaiton.
 
   // loop until you reach that index
   for(int i=0; i < id; i++) {
     item = item->next;
     word = item->str;
+  
+    printf("inside get_hist loop %d...", i); // DEBUG
 
     // if we go out of bounds
     if(*word) {

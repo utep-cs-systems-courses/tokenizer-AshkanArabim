@@ -13,13 +13,7 @@ int non_space_char(char c) {
 char *token_start(char *str){
   // skip characters until you reach a space
   char *sc = str;
-
-  //// WRONG: skip the current word
-  // while(*str != '\0' && !non_space_char(*str++));
-  
-  // skip the speces after the current word
   while (non_space_char(*sc++));
-
   return sc; // return pointer to character after space pointer
 }
 
@@ -34,12 +28,13 @@ char *token_terminator(char *token) {
 int count_tokens(char *str) {
   int count = 0;
   // iterate over string
-  while(str++) {
+  while(*str++ != '\0') {
     if (non_space_char(*str)) { // if non space (word) detected
       count++;
       while(non_space_char(*str++)); // skip all chars in this word
     }
   }
+  return count;
 }
 
 char *copy_str(char *inStr, short len) {
@@ -91,17 +86,13 @@ char* skip_spaces(char* str) {
 }
 
 char** tokenize(char* str){
-  // NOTE: I'm ignoring multiple strings
-
-  // create
-
   // V2 vv
   int numtokens = count_tokens(str);
   char** tokens = malloc(sizeof(char*) * numtokens + 1);
   for (int i = 0; i < numtokens; i++) {
-    str = token_start(str);
     int strsize = (token_terminator(str) - str);
     tokens[i] = copy_str(str, strsize);
+    str = token_start(str);
   }
   tokens[numtokens] = NULL;
 
