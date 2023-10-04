@@ -9,48 +9,38 @@ int non_space_char(char c) { return c != '\0' && !space_char(c); }
 
 char *token_start(char *str) {
   // skip characters until you reach a space
-  char *sc = str;
-  while (non_space_char(*sc))
+  while (non_space_char(*str++))
     ;
-  return sc;  // return pointer to character after space
+  return str;  // return pointer to character after space
 }
 
 char *token_terminator(char *token) {
   // assuming we're on a word, return the (space) character immediately after
   // the word.
-  while (non_space_char(*token++)) {
-    printf("checked %c\n", *token);  // DEBUG: STOPS HERE!!
+  while (non_space_char(*token)) {
+    if (*token == '\n') {
+      // printf("\\n detected alert!"); // DEBUG
+    }
+    token++;
   };
-  printf("token terminator ends...\n");  // DEBUG
   return token;
 }
 
-// int count_tokens(char *str) {
-//   int count = 0;
-//   // iterate over string
-//   while (*str++ != '\0') {
-//     if (non_space_char(*str)) {  // if non space (word) detected
-//       count++;
-//       while (non_space_char(*str++))
-//         ;  // skip all chars in this word
-//     }
-//   }
-//   return count;
-// }
-
-// V2
 int count_tokens(char *str) {
   int count = 0;
-  while (*str++ != '\0') {
-    printf("counter iteration...");  // DEBUG
+  // while (*str++ != '\0') {
+  while(*str != '\0') {
     if (non_space_char(*str)) {
       count++;
       // skip str to the space / terminator following this word.
-      str = token_terminator(str);
+      // note: token terminator points to anything AFTER the word
+      // so if you reach a \n and increment here as well you are screwed.
+      str = token_terminator(str); 
+    } else {
+      str++; // only increment when not using token_terminator
     }
-    printf("NEW this runs inside the loop\n");
   }
-  printf("NEW this runs\n");
+  // printf("I just read: %s\n", str); // DEBUG
   return count;
 }
 
@@ -85,14 +75,11 @@ char *skip_spaces(char *str) {
 }
 
 char **tokenize(char *str) {
-  printf("NEW this runs\n");  // DEBUG
   int numtokens = count_tokens(str);
-  printf("count_tokens returned: %d\n", numtokens);  // DEBUG
+  // printf("count_tokens returned: %d\n", numtokens);  // DEBUG
   char **tokens = malloc(sizeof(char *) * numtokens + 1);
-  printf("tokenizing each word...\n");  // DEBUG
   for (int i = 0; i < numtokens; i++) {
     int strsize = (token_terminator(str) - str);
-    printf("strsize: %d\n", strsize);
     tokens[i] = copy_str(str, strsize);
     str = token_start(str);
   }

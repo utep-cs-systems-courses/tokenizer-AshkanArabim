@@ -30,7 +30,7 @@ int main() {
   List* history = init_history();
   while (1) {
     printf("quit: 'q', history: '^[x]'\n");
-    printf(">");
+    printf("> ");
     // don't go to next iteration until you reach a newline character.
     // char c = getchar();
     // char c;
@@ -54,24 +54,29 @@ int main() {
         printf("Your '^' was not followed by digits...\n");
         continue;
       }
-      printf("this runsss...\n");  // DEBUG
-      printf("%p\n", history);     // DEBUG: works
-      char* hist_line = get_history(history, hist_id);
+      printf("this runsss...\n");     // DEBUG
+      printf("%p\n", history);        // DEBUG
+      printf("%p\n", history->root);  // DEBUG
+      printf("%p\n", history->root->str);  // DEBUG
+      // printf("%p\n", NULL);
+      char* hist_line = get_history(history, hist_id); // FIXME: broken
       printf("this runs...\n");  // DEBUG
       printf("History item %i\n: %s\n", hist_id, hist_line);
 
     } else {
       // add to history
+      printf("before add history\n");
       add_history(history, line);
+      printf("after add history\n");
       // tokenize & print
       char** tokens = tokenize(line);
-      printf("full line: %s", line);  // DEBUG
+      // printf("full line: %s", line);  // DEBUG
       print_tokens(tokens);
       // free tokens right now since we
       // won't use them again...
-      free_tokens(tokens);
-      printf("after being freed vv\n"); // DEBUG: works
-      print_tokens(tokens);  // DEBUG
+      free_tokens(tokens); 
+      // printf("after being freed vv\n"); // DEBUG: 
+      // print_tokens(tokens);  // DEBUG
     }
   }
 }

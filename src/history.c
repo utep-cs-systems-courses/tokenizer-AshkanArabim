@@ -1,3 +1,4 @@
+#include "tokenizer.h"
 #include "history.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -8,55 +9,65 @@ List* init_history() {
   return list;
 }
 
-void add_history(List *list, char *str) {
-  /* // special case: if list is empty, insert here */
-  /* // if(!*(list->root)){ */
-  /* if(list->root == NULL){ */
-  /*   // list->root = malloc(sizeof(Item)); */
-  /*   // *(list->root) = {.id = 0, .str = str}; */
-  /*   // PROBLEM ^^ */
+char *copy_line(char *str) {
+  // make a stack variable
+  // copy str to new var
+  // get size of var
+  // allocate heap memory for var
+  // return pointer
 
-  /*   // for each list sub-item, allocate memory, */
-  /*   // then put a value in it. */
-  /*   list->root = malloc(sizeof(Item)); // allocate for root (Item) */
-  /*   list->root->id = malloc(sizeof(int)); // allocate for id */
-  /*   *(list->root->id) = 0; // assign id */
-  /*   list->root->str = malloc(sizeof(char*)); // allocate for *str */
-  /*   *(list->root->str) = str; // assign str */
-  /*   list->root->next = malloc(sizeof(Item*)); // allocate for next */
-  /*   *(list->root->next) = NULL; // assign next to NULL (bc it's the last one) */
-  /*   return; */
-  /* } */
-  
-  /* int id_counter = 0; */
-  
-  /* // skip to the last list item */
-  /* while (list->next){ */
-  /*   id_counter++; */
-  /*   list = list->next; */
-  /* } */
-  /* // initialize next to a list containing str and the id */
-  /* *(list->next) = {.str = str, .id = ++id_counter}; */
+  // -- alternate logic --
+  // allocate heap memory for 100 chars
+  // NOTE: line size is hard-coded; I'm a lazy idiot.
+  char *newstr = malloc(sizeof(char) * 100);
+  // copy string --> \0 is already included
+  for (int i = 0; i < 100; i++) {
+    newstr[i] = str[i]; 
+    // newstr[i] = '\0'; // doesn't work with all \0 either :/
+  }
+  // return pointer
+  return newstr;
+}
+
+void add_history(List *list, char *str) {
+  printf("add_history works\n"); // DEBUG
 
   // alternate improved logic
   int id_counter = 0;
+  if (list->root == NULL) {
+    list->root = malloc(sizeof(Item)); // allocate for list->root (Item)
+    list->root->id = id_counter; // assign id
+    list->root->str = copy_line(str); // copy str to list->root
+    list->root->next = NULL; // assign next to NULL (bc it's the last one)
+    return;
+  }
+
   Item* histitem = list->root;
+  printf("add_history 2 works\n"); // DEBUG
 
   while(histitem != NULL) {
+    printf("element %i is full.\n", id_counter); // DEBUG
     histitem = histitem->next;
     id_counter++;
   }
   
-  list->root = malloc(sizeof(Item)); // allocate for root (Item)
-  // list->root->id = malloc(sizeof(int)); // allocate for id
-  list->root->id = id_counter; // assign id
-  list->root->str = malloc(sizeof(char*)); // allocate for char* str
-  list->root->str = str; // assign str
-  list->root->next = malloc(sizeof(Item*)); // allocate for Item* next
-  list->root->next = NULL; // assign next to NULL (bc it's the last one)
+  printf("add_history 3 works\n"); // DEBUG
+
+  histitem = malloc(sizeof(Item)); // allocate for root (Item)
+  histitem->id = id_counter; // assign id
+  histitem->str = copy_line(str); // copy str to histitem
+  histitem->next = NULL; // assign next to NULL (bc it's the last one)
+  
+  printf("%s\n", histitem->str); // DEBUG: works
+
+  // doesn't even start.
+  printf("list->root: %p\n", list->root); // DEBUG
+
+  printf("right after the fault\n"); // DEBUG: doesn't run
 }
 
 char *get_history(List* list, int id) {
+  printf("we are in get history...");
   printf("%p", list); // DEBUG
   Item *item = list->root;
   printf("inside get_hist..."); // DEBUG
