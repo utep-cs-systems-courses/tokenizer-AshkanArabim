@@ -45,7 +45,8 @@ void add_history(List *list, char *str) {
   Item* histitem = list->root;
   printf("add_history 2 works\n"); // DEBUG
 
-  while(histitem != NULL) {
+  // skip until last element
+  while(histitem->next != NULL) {
     printf("element %i is full.\n", id_counter); // DEBUG
     histitem = histitem->next;
     id_counter++;
@@ -53,17 +54,21 @@ void add_history(List *list, char *str) {
   
   printf("add_history 3 works\n"); // DEBUG
 
-  histitem = malloc(sizeof(Item)); // allocate for root (Item)
-  histitem->id = id_counter; // assign id
-  histitem->str = copy_line(str); // copy str to histitem
-  histitem->next = NULL; // assign next to NULL (bc it's the last one)
+  // create new pointer
+  Item *new_histitem = malloc(sizeof(Item)); // allocate for root (Item)
+  new_histitem->id = id_counter + 1; // assign id
+  new_histitem->str = copy_line(str); // copy str to new_histitem
+  new_histitem->next = NULL; // assign next to NULL (bc it's the last one)
+
+  // link last element to new element
+  histitem->next = new_histitem;
   
-  printf("%s\n", histitem->str); // DEBUG: works
+  // printf("%s\n", new_histitem->str); // DEBUG: works
 
   // doesn't even start.
-  printf("list->root: %p\n", list->root); // DEBUG
+  // printf("list->root: %p\n", list->root); // DEBUG
 
-  printf("right after the fault\n"); // DEBUG: doesn't run
+  // printf("right after the fault\n"); // DEBUG: doesn't run
 }
 
 char *get_history(List* list, int id) {
