@@ -19,7 +19,6 @@ char *token_terminator(char *token) {
   // the word.
   while (non_space_char(*token)) {
     if (*token == '\n') {
-      // printf("\\n detected alert!"); // DEBUG
     }
     token++;
   };
@@ -40,7 +39,6 @@ int count_tokens(char *str) {
       str++; // only increment when not using token_terminator
     }
   }
-  // printf("I just read: %s\n", str); // DEBUG
   return count;
 }
 
@@ -76,7 +74,6 @@ char *skip_spaces(char *str) {
 
 char **tokenize(char *str) {
   int numtokens = count_tokens(str);
-  // printf("count_tokens returned: %d\n", numtokens);  // DEBUG
   char **tokens = malloc(sizeof(char *) * numtokens + 1);
   for (int i = 0; i < numtokens; i++) {
     int strsize = (token_terminator(str) - str);

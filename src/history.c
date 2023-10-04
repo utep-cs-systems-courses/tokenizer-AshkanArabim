@@ -10,27 +10,18 @@ List* init_history() {
 }
 
 char *copy_line(char *str) {
-  // make a stack variable
-  // copy str to new var
-  // get size of var
-  // allocate heap memory for var
-  // return pointer
-
-  // -- alternate logic --
   // allocate heap memory for 100 chars
   // NOTE: line size is hard-coded; I'm a lazy idiot.
   char *newstr = malloc(sizeof(char) * 100);
   // copy string --> \0 is already included
   for (int i = 0; i < 100; i++) {
     newstr[i] = str[i]; 
-    // newstr[i] = '\0'; // doesn't work with all \0 either :/
   }
   // return pointer
   return newstr;
 }
 
 void add_history(List *list, char *str) {
-  // printf("add_history works\n"); // DEBUG
 
   // alternate improved logic
   int id_counter = 0;
@@ -43,16 +34,12 @@ void add_history(List *list, char *str) {
   }
 
   Item* histitem = list->root;
-  // printf("add_history 2 works\n"); // DEBUG
 
   // skip until last element
   while(histitem->next != NULL) {
-    // printf("element %i is full.\n", id_counter); // DEBUG
     histitem = histitem->next;
     id_counter++;
-  }
-  
-  // printf("add_history 3 works\n"); // DEBUG
+  }  
 
   // create new pointer
   Item *new_histitem = malloc(sizeof(Item)); // allocate for root (Item)
@@ -62,39 +49,34 @@ void add_history(List *list, char *str) {
 
   // link last element to new element
   histitem->next = new_histitem;
-  
-  // printf("%s\n", new_histitem->str); // DEBUG: works
-
-  // doesn't even start.
-  // printf("list->root: %p\n", list->root); // DEBUG
-
-  // printf("right after the fault\n"); // DEBUG: doesn't run
 }
 
 char *get_history(List* list, int id) {
-  printf("we are in get history...\n");
-  // printf("%p\n", list); // DEBUG
+  // if root is null, return null
+  if (list->root == NULL) {
+    printf("You haven't typed anything!\n");
+    return NULL;
+  }
+
   Item *item = list->root;
-  // printf("inside get_hist...\n"); // DEBUG
   char *line = item->str; // these default to the first
-  // printf("inside get_hist...\n"); // DEBUG
   // so, in the for loop below we use i<id to avoid duplicaiton.
 
   // loop until you reach that index
   for(int i=0; i < id; i++) {
     item = item->next;
+    
     // if we go out of bounds
     if(item == NULL) {
       printf("Index out of bounds!\n");
       return NULL;
     }
+
+    // if index in bounds, update line
     line = item->str;
-  
-    // printf("inside get_hist loop %d...\n", i); // DEBUG
   }
 
   return line;
-  //  printf("word [%d]: %s\n", id, word);
 }
 
 void print_history(List *list) {
@@ -114,25 +96,6 @@ void print_history(List *list) {
 // can't be recursive:
 // it's passing a list, NOT an item!
 void free_history(List *list) {
-  // base case: there are no more nodes
-    // return;
-
-  // recurseive case:
-    // recurse on next pointer
-    // free id
-    // free str(it's a pointer)
-    // free self
-
-  /* if (!*list) { */
-  /*   return; */
-  /* } else { */
-  /*   free_history(list->next); // free child */
-  /*   free(list->id); // free id */
-  /*   free(list->str); // free str */
-  /*   free(list); // free self */
-  /* } */
-
-  // ------ new logic ------
   // free all list items until nothing left
   Item* histitem = list->root;
   while (histitem != NULL) {
