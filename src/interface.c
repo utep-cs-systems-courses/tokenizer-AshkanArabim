@@ -49,18 +49,18 @@ int main() {
 
     } else if (line[0] == '^') {
       int hist_id = get_stdin_id(line);
-      printf("%d\n", hist_id);  // DEBUG
+      // printf("%d\n", hist_id);  // DEBUG
       if (hist_id == -1) {
         printf("Your '^' was not followed by digits...\n");
         continue;
       }
-      printf("this runsss...\n");     // DEBUG
-      printf("%p\n", history);        // DEBUG
-      printf("%p\n", history->root);  // DEBUG
-      printf("%p\n", history->root->str);  // DEBUG
+      // printf("this runsss...\n");     // DEBUG
+      // printf("%p\n", history);        // DEBUG
+      // printf("%p\n", history->root);  // DEBUG
+      // printf("%p\n", history->root->str);  // DEBUG
       // printf("%p\n", NULL);
       char* hist_line = get_history(history, hist_id); // FIXME: broken
-      printf("this runs...\n");  // DEBUG
+      // printf("this runs...\n");  // DEBUG
       printf("History item %i: %s\n", hist_id, hist_line);
 
     } else {

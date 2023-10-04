@@ -30,7 +30,7 @@ char *copy_line(char *str) {
 }
 
 void add_history(List *list, char *str) {
-  printf("add_history works\n"); // DEBUG
+  // printf("add_history works\n"); // DEBUG
 
   // alternate improved logic
   int id_counter = 0;
@@ -43,16 +43,16 @@ void add_history(List *list, char *str) {
   }
 
   Item* histitem = list->root;
-  printf("add_history 2 works\n"); // DEBUG
+  // printf("add_history 2 works\n"); // DEBUG
 
   // skip until last element
   while(histitem->next != NULL) {
-    printf("element %i is full.\n", id_counter); // DEBUG
+    // printf("element %i is full.\n", id_counter); // DEBUG
     histitem = histitem->next;
     id_counter++;
   }
   
-  printf("add_history 3 works\n"); // DEBUG
+  // printf("add_history 3 works\n"); // DEBUG
 
   // create new pointer
   Item *new_histitem = malloc(sizeof(Item)); // allocate for root (Item)
@@ -72,26 +72,25 @@ void add_history(List *list, char *str) {
 }
 
 char *get_history(List* list, int id) {
-  printf("we are in get history...");
-  printf("%p", list); // DEBUG
+  printf("we are in get history...\n");
+  // printf("%p\n", list); // DEBUG
   Item *item = list->root;
-  printf("inside get_hist...\n"); // DEBUG
+  // printf("inside get_hist...\n"); // DEBUG
   char *line = item->str; // these default to the first
-  printf("inside get_hist...\n"); // DEBUG
+  // printf("inside get_hist...\n"); // DEBUG
   // so, in the for loop below we use i<id to avoid duplicaiton.
 
   // loop until you reach that index
   for(int i=0; i < id; i++) {
     item = item->next;
-    line = item->str;
-  
-    printf("inside get_hist loop %d...", i); // DEBUG
-
     // if we go out of bounds
     if(item == NULL) {
-      printf("%s\n", "Index out of bounds!");
+      printf("Index out of bounds!\n");
       return NULL;
     }
+    line = item->str;
+  
+    // printf("inside get_hist loop %d...\n", i); // DEBUG
   }
 
   return line;
