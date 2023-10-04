@@ -75,26 +75,26 @@ char *get_history(List* list, int id) {
   printf("we are in get history...");
   printf("%p", list); // DEBUG
   Item *item = list->root;
-  printf("inside get_hist..."); // DEBUG
-  char *word = item->str; // these default to the first
-  printf("inside get_hist..."); // DEBUG
+  printf("inside get_hist...\n"); // DEBUG
+  char *line = item->str; // these default to the first
+  printf("inside get_hist...\n"); // DEBUG
   // so, in the for loop below we use i<id to avoid duplicaiton.
 
   // loop until you reach that index
   for(int i=0; i < id; i++) {
     item = item->next;
-    word = item->str;
+    line = item->str;
   
     printf("inside get_hist loop %d...", i); // DEBUG
 
     // if we go out of bounds
-    if(*word) {
+    if(item == NULL) {
       printf("%s\n", "Index out of bounds!");
       return NULL;
     }
   }
 
-  return word;
+  return line;
   //  printf("word [%d]: %s\n", id, word);
 }
 

@@ -61,7 +61,7 @@ int main() {
       // printf("%p\n", NULL);
       char* hist_line = get_history(history, hist_id); // FIXME: broken
       printf("this runs...\n");  // DEBUG
-      printf("History item %i\n: %s\n", hist_id, hist_line);
+      printf("History item %i: %s\n", hist_id, hist_line);
 
     } else {
       // add to history
